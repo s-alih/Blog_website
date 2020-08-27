@@ -49,6 +49,11 @@ app.post('/blogs',(req,res)=>{
    .then((result)=>res.redirect('/blogs'))
    .catch((error)=>console.log(error))
 })
+
+app.get('/blogs/create', (req,res)=>{
+    res.render('create',{title:'create blog'})
+})
+
 app.get('/blogs/:id',(req,res)=>{
     const id = req.params.id
     
@@ -57,8 +62,11 @@ app.get('/blogs/:id',(req,res)=>{
      .catch((error)=>console.log(error))
 })
 
-app.get('/blogs/create', (req,res)=>{
-    res.render('create',{title:'create blog'})
+app.delete('/blogs/:id',(req,res)=>{
+    const id = req.params.id
+    Blog.findByIdAndDelete(id)
+     .then((result)=>res.json({redirect:'/blogs'}))
+     .catch(err=>console.log(err))
 })
 
 app.use((req,res)=>{

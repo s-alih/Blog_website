@@ -8,8 +8,18 @@
         <div class="content">
           <p><%= blog.body %></p>
         </div>
-      
+      <a class="delete" data-doc="<%= blog._id %> ">delete</a>
       </div>
+      <script>
+        const can = document.querySelector('a.delete')
+        can.addEventListener('click',(e)=>{
+          const endPoint = `/blogs/${can.dataset.doc}`
+          fetch(endPoint,{method:'DELETE'})
+           .then((response)=>response.json())
+           .then((data)=>window.location.href = data.redirect)
+           .catch(err=>console.log(err))
+        })
+      </script>
     <%- include('./partials/footer.ejs')  %> 
 </body>
 </html>
